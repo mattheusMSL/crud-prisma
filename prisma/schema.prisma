@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  //previewFeatures = ["mongodb"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  firstName String
+  lastName  String
+  validated Boolean
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  todo      Todo[]
+
+  @@map("user")
+}
+
+model Todo {
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  todoText  String
+  completed Boolean
+  userId    String       @db.ObjectId
+  user      User         @relation(fields: [userId], references: [id])
+  tags      TagsOnTodos[]
+}
+
+model Tags {
+  id      String       @id @default(auto()) @map("_id") @db.ObjectId
+  tagName String
+  todos   TagsOnTodos[]
+}
+
+model TagsOnTodos{
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  tag    Tags @relation(fields: [tagId], references: [id])
+  tagId  String @db.ObjectId
+  todo   Todo @relation(fields: [todoId], references: [id])
+  todoId String @db.ObjectId
+
+ @@unique([tagId,todoId])
+}

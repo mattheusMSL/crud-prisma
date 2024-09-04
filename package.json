@@ -1,0 +1,23 @@
+{
+  "name": "prismanodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev2": "ts-node get-user.ts",
+    "dev": "ts-node script.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.4.1",
+    "prisma": "^5.18.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.17.0",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.18.0"
+  }
+}
